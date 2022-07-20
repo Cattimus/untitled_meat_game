@@ -16,7 +16,6 @@ set(SOURCES
   libs/imgui/imgui_tables.cpp
   libs/imgui/imgui_widgets.cpp)
 
-//include directories for project
 include_directories(libs/include)
 include_directories(libs/imgui)
 
