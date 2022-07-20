@@ -10,6 +10,9 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "objects/primitives/Shader.hpp"
+#include "objects/primitives/Entity.hpp"
+
 const int width = 640;
 const int height = 480;
 
@@ -37,14 +40,22 @@ int main()
 
 	//enable vsync
 	glfwSwapInterval(1);
+	glViewport(0, 0, width, height);
+
+	//set up shaders
+	auto main_shader = new Shader("../src/shaders/main.vs", "../src/shaders/main.fs");
+	Entity test = Entity(main_shader);
 
 	while(!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		glfwPollEvents();
+		test.render();
 		glfwSwapBuffers(window);
 	}
+
+	delete main_shader;
 
 	glfwTerminate();
 }

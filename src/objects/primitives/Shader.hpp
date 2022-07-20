@@ -125,10 +125,17 @@ public:
 	{
 		glUniform1f(glGetUniformLocation(id, name.c_str()), value);
 	}
+
 	void set_vec3f(std::string name, float x, float y, float z)
 	{
 		glUniform3f(glGetUniformLocation(id, name.c_str()), x, y, z);
 	}
+
+	void set_vec3f(std::string name, glm::vec3 &data)
+	{
+		glUniform3f(glGetUniformLocation(id, name.c_str()), data.x, data.y, data.z);
+	}
+
 	void set_mat4f(std::string name, glm::mat4 &data)
 	{
 		glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, &data[0][0]);
