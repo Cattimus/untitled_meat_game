@@ -6,6 +6,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(SOURCES
   src/main.cpp
+  src/objects/primitives/Texture.cpp
   
   libs/glad/glad.c
   

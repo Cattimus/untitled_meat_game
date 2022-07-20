@@ -44,7 +44,8 @@ int main()
 
 	//set up shaders
 	auto main_shader = new Shader("../src/shaders/main.vs", "../src/shaders/main.fs");
-	Entity test = Entity(main_shader);
+	auto testure = new Texture("../assets/crep.png", GL_LINEAR);
+	Entity test = Entity(main_shader, testure);
 
 	while(!glfwWindowShouldClose(window))
 	{

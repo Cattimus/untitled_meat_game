@@ -3,28 +3,27 @@
 #include "Position.hpp"
 #include "Mesh.hpp"
 #include "Shader.hpp"
-//also needs a texture
+#include "Texture.hpp"
 
 class Entity : public Position
 {
 private:
 	Mesh mesh;
 	Shader* shader;
-	//Texture texture
+	Texture* texture;
 
 public:
-	glm::vec3 render_color;
 
-	Entity(Shader* objShader)
+	Entity(Shader* objShader, Texture* objTexture)
 	{
-		render_color = glm::vec3(0.4f, 0.2f, 0.6f);
 		shader = objShader;
+		texture = objTexture;
 	}
 	
 	//render the current object
 	void render()
 	{
-		shader->set_vec3f("inColor", render_color);
+		texture->use();
 		mesh.draw();
 	}
 };
