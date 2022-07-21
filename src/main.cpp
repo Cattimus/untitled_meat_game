@@ -26,6 +26,7 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
 	//glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
 	auto window = glfwCreateWindow(width, height, "Untitled Meat Game", NULL, NULL);
@@ -39,8 +40,10 @@ int main()
 	}
 
 	//enable vsync
-	glfwSwapInterval(1);
 	glViewport(0, 0, width, height);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 
 	//set up shaders
 	auto main_shader = new Shader("../src/shaders/main.vs", "../src/shaders/main.fs");
@@ -50,12 +53,13 @@ int main()
 	while(!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glfwPollEvents();
 
 		main_shader->use();
 		main_shader->set_mat4f("projection", projection);
 		main_shader->set_mat4f("view", view);
+		test.rotate(glm::vec3(0.01, 0, 0));
 		main_shader->set_mat4f("model", test.get_model());
 		test.render();
 		glfwSwapBuffers(window);

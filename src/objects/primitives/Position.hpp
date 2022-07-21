@@ -78,6 +78,11 @@ public:
 	//set rotation values
 	void rotate(glm::vec3 to)
 	{
+		rotation += to;
+	}
+
+	void rotate_to(glm::vec3 to)
+	{
 		rotation = to;
 	}
 
