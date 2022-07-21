@@ -6,6 +6,5 @@ in vec2 texPos;
 
 void main()
 {
-
 	FragColor = texture(objectTexture, texPos);
 }

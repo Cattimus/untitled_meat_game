@@ -47,7 +47,7 @@ int main()
 
 	//set up shaders
 	auto main_shader = new Shader("../src/shaders/main.vs", "../src/shaders/main.fs");
-	auto testure = new Texture("../assets/crep.png", GL_LINEAR);
+	auto testure = new Texture("../assets/discord.png", GL_LINEAR);
 	Entity test = Entity(main_shader, testure);
 
 	while(!glfwWindowShouldClose(window))
@@ -59,7 +59,7 @@ int main()
 		main_shader->use();
 		main_shader->set_mat4f("projection", projection);
 		main_shader->set_mat4f("view", view);
-		test.rotate(glm::vec3(0.01, 0, 0));
+		test.rotate(glm::vec3(0.5, 1, 0));
 		main_shader->set_mat4f("model", test.get_model());
 		test.render();
 		glfwSwapBuffers(window);
