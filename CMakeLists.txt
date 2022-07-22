@@ -15,7 +15,8 @@ set(SOURCES
   libs/imgui/backends/imgui_impl_opengl3.cpp
   libs/imgui/imgui_draw.cpp
   libs/imgui/imgui_tables.cpp
-  libs/imgui/imgui_widgets.cpp)
+  libs/imgui/imgui_widgets.cpp
+  libs/imgui/imgui_demo.cpp)
 
 include_directories(libs/include)
 include_directories(libs/imgui)

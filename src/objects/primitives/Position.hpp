@@ -79,11 +79,43 @@ public:
 	void rotate(glm::vec3 to)
 	{
 		rotation += to;
+
+		if(rotation.x >= 360)
+		{
+			rotation.x -= 360;
+		}
+		if(rotation.x <= -360)
+		{
+			rotation.x += 360;
+		}
+
+		if(rotation.y >= 360)
+		{
+			rotation.y -= 360;
+		}
+		if(rotation.y <= -360)
+		{
+			rotation.y += 360;
+		}
+
+		if(rotation.z >= 360)
+		{
+			rotation.z -= 360;
+		}
+		if(rotation.z <= -360)
+		{
+			rotation.z += 360;
+		}
 	}
 
 	void rotate_to(glm::vec3 to)
 	{
 		rotation = to;
+	}
+
+	glm::vec3 get_rotation()
+	{
+		return rotation;
 	}
 
 	//reset all values

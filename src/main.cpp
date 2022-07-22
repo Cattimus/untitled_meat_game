@@ -12,9 +12,11 @@
 
 #include "objects/primitives/Shader.hpp"
 #include "objects/primitives/Entity.hpp"
+#include "objects/UI/UI.hpp"
+#include "Globals.hpp"
 
-const int width = 640;
-const int height = 480;
+const int width = 1600;
+const int height = 900;
 
 //set up values for camera
 glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 100.0f);
@@ -48,7 +50,18 @@ int main()
 	//set up shaders
 	auto main_shader = new Shader("../src/shaders/main.vs", "../src/shaders/main.fs");
 	auto testure = new Texture("../assets/discord.png", GL_LINEAR);
-	Entity test = Entity(main_shader, testure);
+	Entity test = Entity(main_shader, testure, "test_cube");
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	//ImGuiIO& io = ImGui::GetIO();
+	ImGui::StyleColorsDark();
+
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init("#version 330");
+
+	UI temp;
+	//temp.demo = true;
+	temp.debug(&test);
 
 	while(!glfwWindowShouldClose(window))
 	{
@@ -59,13 +72,16 @@ int main()
 		main_shader->use();
 		main_shader->set_mat4f("projection", projection);
 		main_shader->set_mat4f("view", view);
-		test.rotate(glm::vec3(0.5, 1, 0));
+		test.rotate(glm::vec3(0.5, 1, 0.01));
+
 		main_shader->set_mat4f("model", test.get_model());
 		test.render();
+		temp.draw();
 		glfwSwapBuffers(window);
 	}
 
 	delete main_shader;
 
+	ImGui::DestroyContext();
 	glfwTerminate();
 }
