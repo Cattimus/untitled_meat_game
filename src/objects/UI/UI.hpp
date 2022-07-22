@@ -3,26 +3,16 @@
 #include "imgui.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
+#include "../../Globals.hpp"
 
 class UI
 {
 private:
-	Entity* debug_target;
-	bool info = false;
 
 public:
 	bool demo = false;
-	
-	UI()
-	{
-		debug_target = NULL;
-	}
+	bool info = false;
 
-	void debug(Entity* target)
-	{
-		debug_target = target;
-		info = true;
-	}
 
 	void draw()
 	{
@@ -43,14 +33,44 @@ public:
 		{
 			
 			ImGui::Begin("Info");
+
+			if(ImGui::TreeNode("Program"))
+			{
+				ImGui::Text("Fps: %d", fps);
+				ImGui::Text("Last frame time: %fms", frame_time * 1000);
+				ImGui::TreePop();
+			}
+
 			if(ImGui::TreeNode("Objects"))
 			{
-				if(debug_target != NULL)
+				for(auto obj : objects)
 				{
-					debug_target->debug_info();
+					obj->debug_frame();
 				}
 				ImGui::TreePop();
 			}
+
+			if(ImGui::TreeNode("Shaders"))
+			{
+				for(auto shader : shaders)
+				{
+					shader->debug_frame();
+				}
+
+				ImGui::TreePop();
+			}
+
+			if(ImGui::TreeNode("Textures"))
+			{
+				for(auto texture : textures)
+				{
+					texture->debug_frame();
+				}
+
+				ImGui::TreePop();
+			}
+
+
 			ImGui::End();
 
 			has_rendered = true;

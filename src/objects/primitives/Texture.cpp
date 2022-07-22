@@ -6,8 +6,11 @@
 
 #include <iostream>
 
-Texture::Texture(std::string filename, GLenum type)
+Texture::Texture(std::string filename, GLenum type, std::string name)
 	{
+		this->name = name;
+		this->filename = filename;
+
 		//create new texture object
 		glGenTextures(1, &id);
 		glBindTexture(GL_TEXTURE_2D, id);

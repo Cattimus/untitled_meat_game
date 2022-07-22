@@ -154,4 +154,11 @@ public:
 		glDrawArrays(GL_TRIANGLES, 0, vert_count);
 		glBindVertexArray(0);
 	}
+
+	void debug_frame()
+	{
+		ImGui::Text("VAO ID: %d", VAO);
+		ImGui::Text("VBO ID: %d", VBO);
+		ImGui::Text("Vertexes:  %ld", vert_count);
+	}
 };

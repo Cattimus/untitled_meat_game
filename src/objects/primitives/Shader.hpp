@@ -5,12 +5,14 @@
 #include <fstream>
 #include <glad/glad.h>
 #include "glm/glm.hpp"
+#include "imgui.h"
 
 class Shader
 {
 private:
 	unsigned int id; //unique ID given to shader by opengl
 	bool valid; //flag to detect if something has gone wrong during shader compilation
+	std::string name;
 
 	unsigned int compile_shader(const char* shader, GLenum type)
 	{
@@ -46,8 +48,9 @@ private:
 	}
 
 public:
-	Shader(std::string vert, std::string frag)
+	Shader(std::string vert, std::string frag, std::string name)
 	{
+		this->name = name;
 		unsigned int vert_id;
 		unsigned int frag_id;
 
@@ -117,6 +120,11 @@ public:
 		glUseProgram(id);
 	}
 
+	std::string get_name()
+	{
+		return name;
+	}
+
 	void set_1i(std::string name, int value)
 	{
 		glUniform1i(glGetUniformLocation(id, name.c_str()), value);
@@ -139,5 +147,16 @@ public:
 	void set_mat4f(std::string name, const glm::mat4 &data)
 	{
 		glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, &data[0][0]);
+	}
+
+	void debug_frame()
+	{
+		if(ImGui::TreeNode(name.c_str()))
+		{
+			ImGui::Text("Shader ID: %d", id);
+			ImGui::Text("Valid: %d", valid);
+			ImGui::Text("Address: %p", this);
+			ImGui::TreePop();
+		}
 	}
 };

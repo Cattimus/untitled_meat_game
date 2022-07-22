@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
 
@@ -12,8 +13,8 @@
 
 #include "objects/primitives/Shader.hpp"
 #include "objects/primitives/Entity.hpp"
-#include "objects/UI/UI.hpp"
 #include "Globals.hpp"
+#include "objects/UI/UI.hpp"
 
 const int width = 1600;
 const int height = 900;
@@ -48,9 +49,13 @@ int main()
 	glDepthFunc(GL_LESS);
 
 	//set up shaders
-	auto main_shader = new Shader("../src/shaders/main.vs", "../src/shaders/main.fs");
-	auto testure = new Texture("../assets/discord.png", GL_LINEAR);
+	auto main_shader = new Shader("../src/shaders/main.vs", "../src/shaders/main.fs", "main_shader");
+	auto testure = new Texture("../assets/discord.png", GL_LINEAR, "cat_texture");
 	Entity test = Entity(main_shader, testure, "test_cube");
+	shaders.push_back(main_shader);
+	textures.push_back(testure);
+	objects.push_back(&test);
+
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	//ImGuiIO& io = ImGui::GetIO();
@@ -61,8 +66,11 @@ int main()
 
 	UI temp;
 	//temp.demo = true;
-	temp.debug(&test);
+	temp.info = true;
 
+	double last_frame = glfwGetTime();
+	frame_time = 0;
+	fps = 0;
 	while(!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
@@ -78,6 +86,10 @@ int main()
 		test.render();
 		temp.draw();
 		glfwSwapBuffers(window);
+
+		frame_time = glfwGetTime() - last_frame;
+		last_frame = glfwGetTime();
+		fps = round(1000 / (frame_time * 1000));
 	}
 
 	delete main_shader;
