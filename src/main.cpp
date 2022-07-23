@@ -17,6 +17,7 @@
 #include "references.hpp"
 
 //TODO - there is some strange behavior with clipping and depth
+//TODO - camera class
 
 const int width = 1600;
 const int height = 900;
@@ -76,18 +77,18 @@ int main()
 	{
 		glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glfwPollEvents();
 
 		main_shader->use();
 		main_shader->set_mat4f("projection", projection);
 		main_shader->set_mat4f("view", view);
-		test.rotate(glm::vec3(0.5, 1, 0.01));
-		test2.rotate(glm::vec3(0.5, 1, 0.01));
+		//test.rotate(glm::vec3(0.5, 1, 0.01));
+		//test2.rotate(glm::vec3(0.5, 1, 0.01));
 
 		test.render();
 		test2.render();
 		temp.draw();
 		glfwSwapBuffers(window);
+		glfwPollEvents();
 
 		References::frame_time = glfwGetTime() - last_frame;
 		last_frame = glfwGetTime();

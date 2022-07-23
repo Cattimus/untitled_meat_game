@@ -7,6 +7,7 @@
 #include "objects/shader.hpp"
 #include "objects/texture.hpp"
 #include "references.hpp"
+#include "limits"
 
 void UI::mesh_frame(Mesh* a)
 {
@@ -51,17 +52,18 @@ void UI::entity_frame(Entity* a)
 
 		if(ImGui::TreeNode("Position"))
 		{
-			ImGui::InputFloat("x", &pos->x, 0.01, 0.1, "%.3f");
-			ImGui::InputFloat("y", &pos->y, 0.01, 0.1, "%.3f");
-			ImGui::InputFloat("z", &pos->z, 0.01, 0.1, "%.3f");
+			ImGui::DragFloat("x", &pos->x, 0.005f, -100000, 100000, "%.3f");
+			ImGui::DragFloat("y", &pos->y, 0.005f, -100000, 100000, "%.3f");
+			ImGui::DragFloat("z", &pos->z, 0.005f, -100000, 100000, "%.3f");
 			ImGui::TreePop();
 		}
 
 		if(ImGui::TreeNode("Rotation"))
 		{
-			ImGui::InputFloat("x", &rot->x, 0.01, 0.1, "%.3f");
-			ImGui::InputFloat("y", &rot->y, 0.01, 0.1, "%.3f");
-			ImGui::InputFloat("z", &rot->z, 0.01, 0.1, "%.3f");
+			ImGui::DragFloat("x", &rot->x, 1.0f, -360.0f, 360.0f, "%.3f");
+			ImGui::DragFloat("y", &rot->y, 1.0f, -360.0f, 360.0f, "%.3f");
+			ImGui::DragFloat("z", &rot->z, 1.0f, -360.0f, 360.0f, "%.3f");
+			a->rotate(glm::vec3(0,0,0));
 			ImGui::TreePop();
 		}
 
