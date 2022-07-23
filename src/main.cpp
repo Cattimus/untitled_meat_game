@@ -16,6 +16,8 @@
 #include "UI.hpp"
 #include "references.hpp"
 
+//TODO - there is some strange behavior with clipping and depth
+
 const int width = 1600;
 const int height = 900;
 
@@ -53,6 +55,9 @@ int main()
 	auto testure = new Texture("../assets/discord.png", GL_LINEAR, "cat_texture");
 	auto temptex = new Texture("../assets/crep.png", GL_LINEAR, "crep_texture");
 	Entity test = Entity(main_shader, testure, "test_cube");
+	Entity test2 = Entity(main_shader, temptex, "test_cube2");
+	test.move(glm::vec3(-0.5, 0, 0));
+	test2.move(glm::vec3(0.5, 0, 0));
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -77,9 +82,10 @@ int main()
 		main_shader->set_mat4f("projection", projection);
 		main_shader->set_mat4f("view", view);
 		test.rotate(glm::vec3(0.5, 1, 0.01));
+		test2.rotate(glm::vec3(0.5, 1, 0.01));
 
-		main_shader->set_mat4f("model", test.get_model());
 		test.render();
+		test2.render();
 		temp.draw();
 		glfwSwapBuffers(window);
 

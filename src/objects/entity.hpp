@@ -35,6 +35,7 @@ public:
 	//render the current object
 	void render()
 	{
+		shader->set_mat4f("model", get_model());
 		texture->use();
 		mesh.draw();
 	}

@@ -10,6 +10,7 @@ private:
 	void entity_frame(Entity* a);
 	void shader_frame(Shader* a);
 	void texture_frame(Texture* a);
+	void mesh_frame(Mesh* a);
 
 public:
 	bool demo = false;

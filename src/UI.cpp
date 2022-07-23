@@ -8,6 +8,13 @@
 #include "objects/texture.hpp"
 #include "references.hpp"
 
+void UI::mesh_frame(Mesh* a)
+{
+	ImGui::Text("VAO ID: %d", a->get_VAO());
+	ImGui::Text("VBO ID: %d", a->get_VBO());
+	ImGui::Text("Vertexes:  %ld", a->get_vertcount());
+}
+
 void UI::shader_frame(Shader* a)
 {
 	if(ImGui::TreeNode(a->get_name().c_str()))
@@ -33,29 +40,32 @@ void UI::texture_frame(Texture* a)
 		}
 }
 
+//TODO - allow editing of position and rotation
 void UI::entity_frame(Entity* a)
 {
 	if(ImGui::TreeNode(a->get_name().c_str()))
 	{
-		glm::vec3 pos = a->get_pos();
-		glm::vec3 rot = a->get_rotation();
+		glm::vec3* pos = a->get_offset_ptr();
+		glm::vec3* rot = a->get_rotation_ptr();
 		ImGui::Text("ID: %p", this);
 
-		if(ImGui::CollapsingHeader("Position", ImGuiTreeNodeFlags_DefaultOpen))
+		if(ImGui::TreeNode("Position"))
 		{
-			ImGui::Text("x: %f", pos.x);
-			ImGui::Text("y: %f", pos.y);
-			ImGui::Text("z: %f", pos.z);
+			ImGui::InputFloat("x", &pos->x, 0.01, 0.1, "%.3f");
+			ImGui::InputFloat("y", &pos->y, 0.01, 0.1, "%.3f");
+			ImGui::InputFloat("z", &pos->z, 0.01, 0.1, "%.3f");
+			ImGui::TreePop();
 		}
 
-		if(ImGui::CollapsingHeader("Rotation", ImGuiTreeNodeFlags_DefaultOpen))
+		if(ImGui::TreeNode("Rotation"))
 		{
-			ImGui::Text("x: %f", rot.x);
-			ImGui::Text("y: %f", rot.y);
-			ImGui::Text("z: %f", rot.z);
+			ImGui::InputFloat("x", &rot->x, 0.01, 0.1, "%.3f");
+			ImGui::InputFloat("y", &rot->y, 0.01, 0.1, "%.3f");
+			ImGui::InputFloat("z", &rot->z, 0.01, 0.1, "%.3f");
+			ImGui::TreePop();
 		}
 
-		if(ImGui::CollapsingHeader("Shaders"))
+		if(ImGui::TreeNode("Shaders"))
 		{
 			int selected_index = 0;
 			for(auto shader_tmp : References::shaders)
@@ -90,9 +100,11 @@ void UI::entity_frame(Entity* a)
 				}
 				ImGui::EndCombo();
 			}
+
+			ImGui::TreePop();
 		}
 
-		if(ImGui::CollapsingHeader("Textures"))
+		if(ImGui::TreeNode("Textures"))
 		{
 			int selected_index = 0;
 			for(auto tex_tmp : References::textures)
@@ -128,11 +140,14 @@ void UI::entity_frame(Entity* a)
 				}
 				ImGui::EndCombo();
 			}
-		}
 
-		if(ImGui::CollapsingHeader("Mesh"))
+			ImGui::TreePop();
+		}
+		
+		if(ImGui::TreeNode("Mesh"))
 		{
-			a->get_mesh()->debug_frame();
+			mesh_frame(a->get_mesh());
+			ImGui::TreePop();
 		}
 
 		ImGui::TreePop();

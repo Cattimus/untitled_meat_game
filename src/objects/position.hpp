@@ -154,6 +154,16 @@ public:
 		return offset;
 	}
 
+	glm::vec3* get_offset_ptr()
+	{
+		return &offset;
+	}
+
+	glm::vec3* get_rotation_ptr()
+	{
+		return &rotation;
+	}
+
 	//return a model matrix that has been transformed to the correct values
 	glm::mat4 get_model()
 	{

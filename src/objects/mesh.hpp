@@ -56,18 +56,26 @@ public:
 		return mesh;
 	}
 
+	unsigned int get_VAO()
+	{
+		return VAO;
+	}
+
+	unsigned int get_VBO()
+	{
+		return VBO;
+	}
+
+	size_t get_vertcount()
+	{
+		return vert_count;
+	}
+
 	//draw mesh
 	void draw()
 	{
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, vert_count);
 		glBindVertexArray(0);
-	}
-
-	void debug_frame()
-	{
-		ImGui::Text("VAO ID: %d", VAO);
-		ImGui::Text("VBO ID: %d", VBO);
-		ImGui::Text("Vertexes:  %ld", vert_count);
 	}
 };

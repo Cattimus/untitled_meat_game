@@ -6,6 +6,8 @@ class Entity;
 class Shader;
 class Texture;
 
+//TODO - make sure to delete objects from the vectors when they are deleted (destructor)
+
 class References
 {
 public:
