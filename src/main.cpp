@@ -51,10 +51,8 @@ int main()
 	//set up shaders
 	auto main_shader = new Shader("../src/shaders/main.vs", "../src/shaders/main.fs", "main_shader");
 	auto testure = new Texture("../assets/discord.png", GL_LINEAR, "cat_texture");
+	auto temptex = new Texture("../assets/crep.png", GL_LINEAR, "crep_texture");
 	Entity test = Entity(main_shader, testure, "test_cube");
-	shaders.push_back(main_shader);
-	textures.push_back(testure);
-	objects.push_back(&test);
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -69,8 +67,6 @@ int main()
 	temp.info = true;
 
 	double last_frame = glfwGetTime();
-	frame_time = 0;
-	fps = 0;
 	while(!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.2f, 0.3f, 1.0f);

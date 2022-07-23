@@ -6,6 +6,7 @@
 #include <glad/glad.h>
 #include "glm/glm.hpp"
 #include "imgui.h"
+#include <vector>
 
 class Shader
 {
@@ -48,6 +49,8 @@ private:
 	}
 
 public:
+	static std::vector<Shader*> shaders;
+
 	Shader(std::string vert, std::string frag, std::string name)
 	{
 		this->name = name;
@@ -106,6 +109,8 @@ public:
 		//free resources
 		glDeleteShader(vert_id);
 		glDeleteShader(frag_id);
+
+		shaders.push_back(this);
 	}
 
 	//free resources

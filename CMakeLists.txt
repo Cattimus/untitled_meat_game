@@ -7,6 +7,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(SOURCES
   src/main.cpp
   src/objects/primitives/Texture.cpp
+  src/objects/primitives/Entity.cpp
+  src/objects/primitives/Shader.cpp
+  src/objects/primitives/Mesh.cpp
   
   libs/glad/glad.c
   

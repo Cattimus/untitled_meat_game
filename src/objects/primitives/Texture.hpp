@@ -3,6 +3,7 @@
 #include "glad/glad.h"
 #include "imgui.h"
 #include <iostream>
+#include <vector>
 
 class Texture
 {
@@ -15,6 +16,8 @@ private:
 	std::string filename;
 
 public:
+	static std::vector<Texture*> textures;
+
 	Texture(std::string filename, GLenum type, std::string name);
 
 	~Texture()

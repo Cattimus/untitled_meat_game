@@ -43,7 +43,7 @@ public:
 
 			if(ImGui::TreeNode("Objects"))
 			{
-				for(auto obj : objects)
+				for(auto obj : Entity::objects)
 				{
 					obj->debug_frame();
 				}
@@ -52,25 +52,22 @@ public:
 
 			if(ImGui::TreeNode("Shaders"))
 			{
-				for(auto shader : shaders)
+				for(auto shader : Shader::shaders)
 				{
 					shader->debug_frame();
 				}
-
 				ImGui::TreePop();
 			}
 
 			if(ImGui::TreeNode("Textures"))
 			{
-				for(auto texture : textures)
+				for(auto texture : Texture::textures)
 				{
 					texture->debug_frame();
 				}
 
 				ImGui::TreePop();
 			}
-
-
 			ImGui::End();
 
 			has_rendered = true;
