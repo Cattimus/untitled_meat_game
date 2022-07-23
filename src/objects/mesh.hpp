@@ -16,26 +16,7 @@ private:
 	unsigned int VBO;
 
 	//initialize buffers
-	void bind_buffers()
-	{
-		//initialize objects
-		glGenVertexArrays(1, &VAO);
-		glGenBuffers(1, &VBO);
-
-		//bind buffers
-		glBindVertexArray(VAO);
-
-		//assign buffer data
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vert_count * 5, mesh, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
-
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
-
-		glBindVertexArray(0);
-	}
+	void bind_buffers();
 
 	float* copy_vertex3f(float* dest, glm::vec3 src)
 	{

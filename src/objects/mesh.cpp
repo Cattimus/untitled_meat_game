@@ -75,3 +75,24 @@ void Mesh::make_cube(glm::vec3 size)
 	cur = copy_vertex3f(cur, lfr); cur = copy_tex2f(cur, 0, 0);
 	cur = copy_vertex3f(cur, ufr); cur = copy_tex2f(cur, 0, 1);
 }
+
+void Mesh::bind_buffers()
+{
+	//initialize objects
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+
+	//bind buffers
+	glBindVertexArray(VAO);
+
+	//assign buffer data
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vert_count * 5, mesh, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	glBindVertexArray(0);
+}

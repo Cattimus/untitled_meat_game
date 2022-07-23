@@ -8,6 +8,7 @@
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 #include <vector>
+#include <iostream>
 #include "../references.hpp"
 
 class Shader;
