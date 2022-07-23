@@ -7,6 +7,7 @@
 #include "glm/glm.hpp"
 #include "imgui.h"
 #include <vector>
+#include "../references.hpp"
 
 class Shader
 {
@@ -49,8 +50,6 @@ private:
 	}
 
 public:
-	static std::vector<Shader*> shaders;
-
 	Shader(std::string vert, std::string frag, std::string name)
 	{
 		this->name = name;
@@ -110,7 +109,7 @@ public:
 		glDeleteShader(vert_id);
 		glDeleteShader(frag_id);
 
-		shaders.push_back(this);
+		References::shaders.push_back(this);
 	}
 
 	//free resources
@@ -128,6 +127,16 @@ public:
 	std::string get_name()
 	{
 		return name;
+	}
+
+	bool is_valid()
+	{
+		return valid;
+	}
+
+	unsigned int get_id()
+	{
+		return id;
 	}
 
 	void set_1i(std::string name, int value)
@@ -152,16 +161,5 @@ public:
 	void set_mat4f(std::string name, const glm::mat4 &data)
 	{
 		glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, &data[0][0]);
-	}
-
-	void debug_frame()
-	{
-		if(ImGui::TreeNode(name.c_str()))
-		{
-			ImGui::Text("Shader ID: %d", id);
-			ImGui::Text("Valid: %d", valid);
-			ImGui::Text("Address: %p", this);
-			ImGui::TreePop();
-		}
 	}
 };

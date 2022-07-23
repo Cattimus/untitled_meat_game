@@ -11,10 +11,10 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "objects/Shader.hpp"
-#include "objects/Entity.hpp"
-#include "Globals.hpp"
+#include "objects/shader.hpp"
+#include "objects/entity.hpp"
 #include "UI.hpp"
+#include "references.hpp"
 
 const int width = 1600;
 const int height = 900;
@@ -83,9 +83,9 @@ int main()
 		temp.draw();
 		glfwSwapBuffers(window);
 
-		frame_time = glfwGetTime() - last_frame;
+		References::frame_time = glfwGetTime() - last_frame;
 		last_frame = glfwGetTime();
-		fps = round(1000 / (frame_time * 1000));
+		References::fps = round(1000 / (References::frame_time * 1000));
 	}
 
 	delete main_shader;

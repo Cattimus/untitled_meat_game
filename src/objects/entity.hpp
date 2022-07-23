@@ -1,13 +1,14 @@
 #pragma once
 
-#include "Position.hpp"
-#include "Mesh.hpp"
-#include "Shader.hpp"
-#include "Texture.hpp"
+#include "position.hpp"
+#include "mesh.hpp"
+#include "shader.hpp"
+#include "texture.hpp"
 #include "imgui.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 #include <vector>
+#include "../references.hpp"
 
 class Shader;
 class Texture;
@@ -22,14 +23,12 @@ private:
 	std::string name;
 
 public:
-	static std::vector<Entity*> objects;
-
 	Entity(Shader* objShader, Texture* objTexture, std::string objName)
 	{
 		shader = objShader;
 		texture = objTexture;
 		name = objName;
-		objects.push_back(this);
+		References::objects.push_back(this);
 	}
 	
 	//render the current object
@@ -39,6 +38,33 @@ public:
 		mesh.draw();
 	}
 
-	//adds the appropriate debug info to the debug UI frame
-	void debug_frame();
+	Shader* get_shader()
+	{
+		return shader;
+	}
+
+	Mesh* get_mesh()
+	{
+		return &mesh;
+	}
+
+	void set_shader(Shader* to)
+	{
+		shader = to;
+	}
+
+	Texture* get_texture()
+	{
+		return texture;
+	}
+	
+	void set_texture(Texture* to)
+	{
+		texture = to;
+	}
+
+	std::string get_name()
+	{
+		return name;
+	}
 };

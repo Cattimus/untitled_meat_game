@@ -1,4 +1,4 @@
-#include "Mesh.hpp"
+#include "mesh.hpp"
 
 void Mesh::make_cube(glm::vec3 size)
 {

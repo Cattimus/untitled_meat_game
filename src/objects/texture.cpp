@@ -1,10 +1,11 @@
-#include "Texture.hpp"
+#include "texture.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include "glad/glad.h"
 
 #include <iostream>
+#include "../references.hpp"
 
 Texture::Texture(std::string filename, GLenum type, std::string name)
 {
@@ -60,7 +61,5 @@ Texture::Texture(std::string filename, GLenum type, std::string name)
 
 	stbi_image_free(data);
 
-	Texture::textures.push_back(this);
+	References::textures.push_back(this);
 }
-
-std::vector<Texture*> Texture::textures = std::vector<Texture*>();

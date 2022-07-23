@@ -16,7 +16,6 @@ private:
 	std::string filename;
 
 public:
-	static std::vector<Texture*> textures;
 
 	Texture(std::string filename, GLenum type, std::string name);
 
@@ -35,17 +34,17 @@ public:
 		return (float)width / height;
 	}
 
-	double get_width()
+	int get_width()
 	{
 		return width;
 	}
 
-	double get_height()
+	int get_height()
 	{
 		return height;
 	}
 
-	double get_channels()
+	int get_channels()
 	{
 		return channels;
 	}
@@ -55,18 +54,13 @@ public:
 		return name;
 	}
 
-	//info for debug
-	void debug_frame()
+	std::string get_filename()
 	{
-		if(ImGui::TreeNode(name.c_str()))
-		{
-			ImGui::Text("Filename: %s", filename.c_str());
-			ImGui::Text("Width: %d", width);
-			ImGui::Text("Height: %d", height);
-			ImGui::Text("Channels: %d", channels);
-			ImGui::Text("Address: %p", this);
-			ImGui::Text("Opengl Texture ID: %d", id);
-			ImGui::TreePop();
-		}
+		return filename;
+	}
+
+	unsigned int get_id()
+	{
+		return id;
 	}
 };
