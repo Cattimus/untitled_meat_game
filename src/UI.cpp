@@ -1,8 +1,8 @@
 #include "UI.hpp"
 
-#include "../Entity.hpp"
-#include "../Shader.hpp"
-#include "../Texture.hpp"
+#include "objects/Entity.hpp"
+#include "objects/Shader.hpp"
+#include "objects/Texture.hpp"
 
 void UI::draw()
 {

@@ -11,10 +11,10 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "objects/primitives/Shader.hpp"
-#include "objects/primitives/Entity.hpp"
+#include "objects/Shader.hpp"
+#include "objects/Entity.hpp"
 #include "Globals.hpp"
-#include "objects/UI/UI.hpp"
+#include "UI.hpp"
 
 const int width = 1600;
 const int height = 900;
