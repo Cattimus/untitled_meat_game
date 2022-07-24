@@ -1,8 +1,8 @@
 #include "references.hpp"
 
-#include "objects/entity.hpp"
-#include "objects/shader.hpp"
-#include "objects/texture.hpp"
+#include "scene/entity.hpp"
+#include "data/shader.hpp"
+#include "data/texture.hpp"
 
 int References::fps = 0;
 double References::frame_time = 0;

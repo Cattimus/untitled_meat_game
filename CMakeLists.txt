@@ -6,10 +6,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(SOURCES
   src/main.cpp
-  src/objects/texture.cpp
-  src/objects/entity.cpp
-  src/objects/shader.cpp
-  src/objects/mesh.cpp
+  src/data/texture.cpp
+  src/scene/entity.cpp
+  src/data/shader.cpp
+  src/data/mesh.cpp
+  src/scene/camera.cpp
   src/references.cpp
   src/UI.cpp
   
