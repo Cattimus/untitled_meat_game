@@ -13,6 +13,8 @@ class References
 public:
 	static int fps;
 	static double frame_time;
+	static int width;
+	static int height;
 	static std::vector<Entity*> objects;
 	static std::vector<Shader*> shaders;
 	static std::vector<Texture*> textures;

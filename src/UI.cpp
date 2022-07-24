@@ -3,9 +3,9 @@
 #include "imgui.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
-#include "objects/entity.hpp"
-#include "objects/shader.hpp"
-#include "objects/texture.hpp"
+#include "scene/entity.hpp"
+#include "data/shader.hpp"
+#include "data/texture.hpp"
 #include "references.hpp"
 #include "limits"
 

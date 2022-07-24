@@ -25,6 +25,7 @@ set(SOURCES
 
 include_directories(libs/include)
 include_directories(libs/imgui)
+include_directories(src)
 
 add_compile_options(-g -Wall)
 

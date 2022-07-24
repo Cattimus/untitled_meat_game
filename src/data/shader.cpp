@@ -6,7 +6,7 @@
 #include <glad/glad.h>
 #include "glm/glm.hpp"
 #include <vector>
-#include "../references.hpp"
+#include "references.hpp"
 
 unsigned int Shader::compile_shader(const char* shader, GLenum type)
 {

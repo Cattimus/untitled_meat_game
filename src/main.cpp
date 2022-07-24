@@ -11,17 +11,11 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "objects/shader.hpp"
-#include "objects/entity.hpp"
+#include "data/shader.hpp"
+#include "scene/entity.hpp"
+#include "scene/camera.hpp"
 #include "UI.hpp"
 #include "references.hpp"
-
-const int width = 1600;
-const int height = 900;
-
-//set up values for camera
-glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 100.0f);
-glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
 
 int main()
 {
@@ -32,7 +26,7 @@ int main()
 	glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
 	//glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
-	auto window = glfwCreateWindow(width, height, "Untitled Meat Game", NULL, NULL);
+	auto window = glfwCreateWindow(References::width, References::height, "Untitled Meat Game", NULL, NULL);
 	glfwMakeContextCurrent(window);
 
 	//load extensions
@@ -43,10 +37,13 @@ int main()
 	}
 
 	//enable vsync
-	glViewport(0, 0, width, height);
+	glViewport(0, 0, References::width, References::height);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
+
+	//set up camera
+	Camera main_camera;
 
 	//set up shaders
 	auto main_shader = new Shader("../src/shaders/main.vs", "../src/shaders/main.fs", "main_shader");
@@ -76,8 +73,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		main_shader->use();
-		main_shader->set_mat4f("projection", projection);
-		main_shader->set_mat4f("view", view);
+		main_camera.use(main_shader);
 
 		test.render();
 		test2.render();

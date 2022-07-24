@@ -5,7 +5,7 @@
 #include "glad/glad.h"
 
 #include <iostream>
-#include "../references.hpp"
+#include "references.hpp"
 
 Texture::Texture(std::string filename, GLenum type, std::string name)
 {

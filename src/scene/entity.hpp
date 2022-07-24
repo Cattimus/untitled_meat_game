@@ -1,15 +1,15 @@
 #pragma once
 
-#include "position.hpp"
-#include "mesh.hpp"
-#include "shader.hpp"
-#include "texture.hpp"
+#include "data/position.hpp"
+#include "data/mesh.hpp"
+#include "data/shader.hpp"
+#include "data/texture.hpp"
 #include "imgui.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 #include <vector>
 #include <iostream>
-#include "../references.hpp"
+#include "references.hpp"
 
 class Shader;
 class Texture;
