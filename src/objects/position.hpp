@@ -9,6 +9,7 @@ private:
 	glm::vec3 origin;
 	glm::vec3 offset;
 	glm::vec3 rotation;
+	float scale;
 
 public:
 	Position()
@@ -16,6 +17,7 @@ public:
 		origin   = glm::vec3(0, 0, 0);
 		offset   = glm::vec3(0, 0, 0);
 		rotation = glm::vec3(0, 0, 0);
+		scale 	 = 1;
 	}
 
 	//move relative to the current position
@@ -164,6 +166,21 @@ public:
 		return &rotation;
 	}
 
+	float get_scale()
+	{
+		return scale;
+	}
+
+	float* get_scale_ptr()
+	{
+		return &scale;
+	}
+	
+	void set_scale(float s)
+	{
+		scale = s;
+	}
+
 	//return a model matrix that has been transformed to the correct values
 	glm::mat4 get_model()
 	{
@@ -171,6 +188,7 @@ public:
 		model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1.0f, 0, 0));
 		model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0, 1.0f, 0));
 		model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0, 0, 1.0f));
+		model = glm::scale(model, glm::vec3(scale, scale, scale));
 		return model;
 	}
 };

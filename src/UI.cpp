@@ -41,7 +41,6 @@ void UI::texture_frame(Texture* a)
 		}
 }
 
-//TODO - allow editing of position and rotation
 void UI::entity_frame(Entity* a)
 {
 	if(ImGui::TreeNode(a->get_name().c_str()))
@@ -55,6 +54,7 @@ void UI::entity_frame(Entity* a)
 			ImGui::DragFloat("x", &pos->x, 0.005f, -100000, 100000, "%.3f");
 			ImGui::DragFloat("y", &pos->y, 0.005f, -100000, 100000, "%.3f");
 			ImGui::DragFloat("z", &pos->z, 0.005f, -100000, 100000, "%.3f");
+			ImGui::DragFloat("scale", a->get_scale_ptr(), 0.005f, 0, 100000, "%.3f");
 			ImGui::TreePop();
 		}
 
@@ -171,6 +171,7 @@ void UI::draw()
 		has_rendered = true;
 	}
 
+	//TODO - split all of these into different frames
 	if(info)
 	{
 		
