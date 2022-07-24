@@ -36,7 +36,6 @@ int main()
 		return -1;
 	}
 
-	//enable vsync
 	glViewport(0, 0, References::width, References::height);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
@@ -64,7 +63,8 @@ int main()
 
 	UI temp;
 	//temp.demo = true;
-	temp.info = true;
+	//temp.objects = true;
+	temp.debug = true;
 
 	double last_frame = glfwGetTime();
 	while(!glfwWindowShouldClose(window))

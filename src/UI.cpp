@@ -158,69 +158,91 @@ void UI::entity_frame(Entity* a)
 
 void UI::draw()
 {
-	bool has_rendered = false;
-
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
+	if(debug)
+	{
+		ImGui::Begin("Debug", &debug);
+
+		if(ImGui::Button("Show process info"))
+		{
+			info = true;
+		}
+
+		if(ImGui::Button("Show objects window")) 
+		{
+			objects = true;
+		}
+
+		if(ImGui::Button("Show textures window"))
+		{
+			textures = true;
+		}
+
+		if(ImGui::Button("Show shaders window"))
+		{
+			shaders = true;
+		}
+
+		if(ImGui::Button("Show demo"))
+		{
+			demo = true;
+		}
+
+		ImGui::End();
+	}
+
 	if(demo)
 	{
 		ImGui::ShowDemoWindow(&demo);
-
-		has_rendered = true;
 	}
 
-	//TODO - split all of these into different frames
+	
 	if(info)
 	{
+		ImGui::Begin("Info", &info);
+		ImGui::Text("Fps: %d", References::fps);
+		ImGui::Text("Last frame time: %fms", References::frame_time * 1000);
+		ImGui::Text("Entity count: %ld", References::objects.size());
+		ImGui::Text("Texture count: %ld", References::textures.size());
+		ImGui::Text("Shader count: %ld", References::shaders.size());
 		
-		ImGui::Begin("Info");
+		ImGui::End();
+	}
 
-		if(ImGui::TreeNode("Program"))
+	if(objects)
+	{
+		ImGui::Begin("Objects", &objects);
+		for(auto obj : References::objects)
 		{
-			ImGui::Text("Fps: %d", References::fps);
-			ImGui::Text("Last frame time: %fms", References::frame_time * 1000);
-			ImGui::TreePop();
-		}
-
-		if(ImGui::TreeNode("Objects"))
-		{
-			for(auto obj : References::objects)
-			{
-				entity_frame(obj);
-			}
-			ImGui::TreePop();
-		}
-
-		if(ImGui::TreeNode("Shaders"))
-		{
-			for(auto shader : References::shaders)
-			{
-				shader_frame(shader);
-			}
-			ImGui::TreePop();
-		}
-
-		if(ImGui::TreeNode("Textures"))
-		{
-			for(auto texture : References::textures)
-			{
-				texture_frame(texture);
-			}
-
-			ImGui::TreePop();
+			entity_frame(obj);
 		}
 		ImGui::End();
+	}
 
-		has_rendered = true;
+	if(shaders)
+	{
+		ImGui::Begin("Shaders", &shaders);
+		for(auto shader : References::shaders)
+		{
+			shader_frame(shader);
+		}
+		ImGui::End();
+	}
+
+	if(textures)
+	{
+		ImGui::Begin("Textures", &textures);
+		for(auto texture : References::textures)
+		{
+			texture_frame(texture);
+		}
+		ImGui::End();
 	}
 
 	ImGui::EndFrame();
-
-	if(has_rendered)
-	{
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	}
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }

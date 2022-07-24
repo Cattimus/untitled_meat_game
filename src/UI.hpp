@@ -14,6 +14,10 @@ private:
 
 public:
 	bool demo = false;
+	bool debug = false;
+	bool objects = false;
+	bool shaders = false;
+	bool textures = false;
 	bool info = false;
 
 	void draw();
