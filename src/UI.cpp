@@ -7,7 +7,6 @@
 #include "data/shader.hpp"
 #include "data/texture.hpp"
 #include "references.hpp"
-#include "limits"
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
@@ -48,11 +47,15 @@ void UI::camera_frame(Camera* a)
 	glm::vec3* pos = a->get_offset_ptr();
 	glm::vec3* rot = a->get_rotation_ptr();
 	ImGui::Text("ID: %p", this);
+	float FOV = a->get_fov();
 
 	ImGui::DragFloat3("Position", glm::value_ptr(*pos), 0.005f, -100000, 100000, "%.3f");
-	ImGui::DragFloat("Scale", a->get_scale_ptr(), 0.005f, 0, 100000, "%.3f");
+	ImGui::DragFloat("FOV", &FOV, 1.0f, 0.0f, 10000.0f, "%.2f");
 	ImGui::DragFloat3("Rotation", glm::value_ptr(*rot), 1.0f, -360, 360, "%.3f");
+	
 	a->rotate(glm::vec3(0,0,0));
+	a->change_fov(FOV);
+
 }
 
 void UI::entity_frame(Entity* a)
@@ -187,8 +190,6 @@ void UI::draw()
 		{
 			demo = true;
 		}
-
-		
 
 		ImGui::End();
 	}

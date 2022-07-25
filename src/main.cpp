@@ -53,7 +53,8 @@ int main()
 	test.move(glm::vec3(-0.5, 0, 0));
 	test2.move(glm::vec3(0.5, 0, 0));
 
-	References::main_camera->move_origin_to(glm::vec3(0, 0, -3));
+	//References::main_camera->move_origin_to(glm::vec3(0, 0, 3));
+	References::main_camera->move_to(glm::vec3(0,0,3));
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
