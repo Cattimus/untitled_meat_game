@@ -5,7 +5,7 @@
 
 class Position
 {
-private:
+protected:
 	glm::vec3 origin;
 	glm::vec3 offset;
 	glm::vec3 rotation;

@@ -8,6 +8,8 @@
 #include "data/texture.hpp"
 #include "references.hpp"
 #include "limits"
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 void UI::mesh_frame(Mesh* a)
 {
@@ -41,6 +43,18 @@ void UI::texture_frame(Texture* a)
 		}
 }
 
+void UI::camera_frame(Camera* a)
+{
+	glm::vec3* pos = a->get_offset_ptr();
+	glm::vec3* rot = a->get_rotation_ptr();
+	ImGui::Text("ID: %p", this);
+
+	ImGui::DragFloat3("Position", glm::value_ptr(*pos), 0.005f, -100000, 100000, "%.3f");
+	ImGui::DragFloat("Scale", a->get_scale_ptr(), 0.005f, 0, 100000, "%.3f");
+	ImGui::DragFloat3("Rotation", glm::value_ptr(*rot), 1.0f, -360, 360, "%.3f");
+	a->rotate(glm::vec3(0,0,0));
+}
+
 void UI::entity_frame(Entity* a)
 {
 	if(ImGui::TreeNode(a->get_name().c_str()))
@@ -49,101 +63,79 @@ void UI::entity_frame(Entity* a)
 		glm::vec3* rot = a->get_rotation_ptr();
 		ImGui::Text("ID: %p", this);
 
-		if(ImGui::TreeNode("Position"))
+		ImGui::DragFloat3("Position", glm::value_ptr(*pos), 0.005f, -100000, 100000, "%.3f");
+		ImGui::DragFloat("Scale", a->get_scale_ptr(), 0.005f, 0, 100000, "%.3f");
+		ImGui::DragFloat3("Rotation", glm::value_ptr(*rot), 1.0f, -360, 360, "%.3f");
+		a->rotate(glm::vec3(0,0,0));
+
+		//shader combo box
+		int selected_shader_index = 0;
+		for(auto shader_tmp : References::shaders)
 		{
-			ImGui::DragFloat("x", &pos->x, 0.005f, -100000, 100000, "%.3f");
-			ImGui::DragFloat("y", &pos->y, 0.005f, -100000, 100000, "%.3f");
-			ImGui::DragFloat("z", &pos->z, 0.005f, -100000, 100000, "%.3f");
-			ImGui::DragFloat("scale", a->get_scale_ptr(), 0.005f, 0, 100000, "%.3f");
-			ImGui::TreePop();
+			if(shader_tmp == a->get_shader())
+			{
+				break;
+			}
+			else
+			{
+				selected_shader_index++;
+			}
 		}
 
-		if(ImGui::TreeNode("Rotation"))
+		if(ImGui::BeginCombo("Shader", a->get_shader()->get_name().c_str()))
 		{
-			ImGui::DragFloat("x", &rot->x, 1.0f, -360.0f, 360.0f, "%.3f");
-			ImGui::DragFloat("y", &rot->y, 1.0f, -360.0f, 360.0f, "%.3f");
-			ImGui::DragFloat("z", &rot->z, 1.0f, -360.0f, 360.0f, "%.3f");
-			a->rotate(glm::vec3(0,0,0));
-			ImGui::TreePop();
-		}
-
-		if(ImGui::TreeNode("Shaders"))
-		{
-			int selected_index = 0;
+			int counter = 0;
 			for(auto shader_tmp : References::shaders)
 			{
-				if(shader_tmp == a->get_shader())
+				const bool is_selected = (counter == selected_shader_index);
+				if(ImGui::Selectable(shader_tmp->get_name().c_str(), is_selected))
 				{
-					break;
+					selected_shader_index = counter;
 				}
-				else
+
+				if(is_selected)
 				{
-					selected_index++;
+					ImGui::SetItemDefaultFocus();
 				}
+
+				counter++;
 			}
-
-			if(ImGui::BeginCombo("Shader", a->get_shader()->get_name().c_str()))
-			{
-				int counter = 0;
-				for(auto shader_tmp : References::shaders)
-				{
-					const bool is_selected = (counter == selected_index);
-					if(ImGui::Selectable(shader_tmp->get_name().c_str(), is_selected))
-					{
-						selected_index = counter;
-					}
-
-					if(is_selected)
-					{
-						ImGui::SetItemDefaultFocus();
-					}
-
-					counter++;
-				}
-				ImGui::EndCombo();
-			}
-
-			ImGui::TreePop();
+			ImGui::EndCombo();
 		}
 
-		if(ImGui::TreeNode("Textures"))
+		int selected_texture_index = 0;
+		for(auto tex_tmp : References::textures)
 		{
-			int selected_index = 0;
+			if(tex_tmp == a->get_texture())
+			{
+				break;
+			}
+			else
+			{
+				selected_texture_index++;
+			}
+		}
+
+		if(ImGui::BeginCombo("Texture", a->get_texture()->get_name().c_str()))
+		{
+			int counter = 0;
 			for(auto tex_tmp : References::textures)
 			{
-				if(tex_tmp == a->get_texture())
+				const bool is_selected = (counter == selected_texture_index);
+				if(ImGui::Selectable(tex_tmp->get_name().c_str(), is_selected))
 				{
-					break;
+					a->set_texture(References::textures.at(counter));
+					selected_texture_index = counter;
 				}
-				else
+
+				if(is_selected)
 				{
-					selected_index++;
+					ImGui::SetItemDefaultFocus();
 				}
+
+				counter++;
 			}
-
-			if(ImGui::BeginCombo("Texture", a->get_texture()->get_name().c_str()))
-			{
-				int counter = 0;
-				for(auto tex_tmp : References::textures)
-				{
-					const bool is_selected = (counter == selected_index);
-					if(ImGui::Selectable(tex_tmp->get_name().c_str(), is_selected))
-					{
-						a->set_texture(References::textures.at(counter));
-						selected_index = counter;
-					}
-
-					if(is_selected)
-					{
-						ImGui::SetItemDefaultFocus();
-					}
-
-					counter++;
-				}
-				ImGui::EndCombo();
-			}
-
-			ImGui::TreePop();
+			ImGui::EndCombo();
 		}
 		
 		if(ImGui::TreeNode("Mesh"))
@@ -171,6 +163,11 @@ void UI::draw()
 			info = true;
 		}
 
+		if(ImGui::Button("Show camera window"))
+		{
+			camera = true;
+		}
+
 		if(ImGui::Button("Show objects window")) 
 		{
 			objects = true;
@@ -190,6 +187,8 @@ void UI::draw()
 		{
 			demo = true;
 		}
+
+		
 
 		ImGui::End();
 	}
@@ -240,6 +239,14 @@ void UI::draw()
 			texture_frame(texture);
 		}
 		ImGui::End();
+	}
+
+	if(camera)
+	{
+		ImGui::Begin("Camera", &camera);
+		camera_frame(References::main_camera);
+		ImGui::End();
+		
 	}
 
 	ImGui::EndFrame();

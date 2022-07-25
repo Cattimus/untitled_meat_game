@@ -42,7 +42,7 @@ int main()
 	glDepthFunc(GL_LESS);
 
 	//set up camera
-	Camera main_camera;
+	References::main_camera = new Camera();
 
 	//set up shaders
 	auto main_shader = new Shader("../src/shaders/main.vs", "../src/shaders/main.fs", "main_shader");
@@ -52,6 +52,8 @@ int main()
 	Entity test2 = Entity(main_shader, temptex, "test_cube2");
 	test.move(glm::vec3(-0.5, 0, 0));
 	test2.move(glm::vec3(0.5, 0, 0));
+
+	References::main_camera->move_origin_to(glm::vec3(0, 0, -3));
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -73,7 +75,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		main_shader->use();
-		main_camera.use(main_shader);
+		References::main_camera->use(main_shader);
 
 		test.render();
 		test2.render();
@@ -87,6 +89,7 @@ int main()
 	}
 
 	delete main_shader;
+	delete References::main_camera;
 
 	ImGui::DestroyContext();
 	glfwTerminate();

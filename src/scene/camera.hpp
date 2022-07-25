@@ -9,11 +9,12 @@
 class Camera : public Position
 {
 private:
-
-public:
 	glm::mat4 projection;
 	glm::mat4 view;
 	float fov;
+
+public:
+	
 
 	Camera()
 	{
@@ -21,13 +22,33 @@ public:
 		(float)References::width / (float)References::height,
 		0.1f, 100.0f);
 
-		view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+		view = glm::mat4(1.0f);
+	}
+
+	void change_fov(float new_fov)
+	{
+		projection = glm::perspective(glm::radians(fov),
+		(float)References::width / (float)References::height,
+		0.1f, 100.0f);
+	}
+
+	float get_fov()
+	{
+		return fov;
 	}
 
 	void use(Shader* shader)
 	{
+		//calculate the pitch and yaw values. pitch is adjusted by 90 to start at 0
+		glm::vec3 pyr(
+		cos(glm::radians(rotation.x + 90)) * cos(glm::radians(rotation.y)),
+		sin(glm::radians(rotation.y)),
+		sin(glm::radians(rotation.x + 90)) * cos(glm::radians(rotation.y)));
+		pyr = glm::normalize(pyr);
+
+
 		shader->set_mat4f("projection", projection);
-		shader->set_mat4f("view", view);
+		shader->set_mat4f("view", glm::lookAt(get_pos(), get_pos() + pyr, glm::vec3(0,1,0)));
 	}
 
 };
