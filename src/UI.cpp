@@ -64,11 +64,19 @@ void UI::entity_frame(Entity* a)
 	{
 		glm::vec3* pos = a->get_offset_ptr();
 		glm::vec3* rot = a->get_rotation_ptr();
+		glm::vec3* vel = a->get_vl_ptr();
+		glm::vec3* rotvel = a->get_rvl_ptr();
 		ImGui::Text("ID: %p", this);
 
+		ImGui::Text("Position data");
 		ImGui::DragFloat3("Position", glm::value_ptr(*pos), 0.005f, -100000, 100000, "%.3f");
 		ImGui::DragFloat("Scale", a->get_scale_ptr(), 0.005f, 0, 100000, "%.3f");
 		ImGui::DragFloat3("Rotation", glm::value_ptr(*rot), 1.0f, -360, 360, "%.3f");
+
+		ImGui::Text("Velocity data");
+		ImGui::DragFloat3("Velocity", glm::value_ptr(*vel), 0.0005f, -1, 1, "%.3f");
+		ImGui::DragFloat3("Rotation Velocity", glm::value_ptr(*rotvel), 1.0f, -720, 720, "%.3f");
+
 		a->rotate(glm::vec3(0,0,0));
 
 		//shader combo box

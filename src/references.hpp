@@ -13,7 +13,7 @@ class References
 {
 public:
 	static int fps;
-	static double frame_time;
+	static float frame_time;
 	static int width;
 	static int height;
 	static Camera* main_camera;

@@ -52,8 +52,8 @@ int main()
 	Entity test2 = Entity(main_shader, temptex, "test_cube2");
 	test.move(glm::vec3(-0.5, 0, 0));
 	test2.move(glm::vec3(0.5, 0, 0));
-
-	//References::main_camera->move_origin_to(glm::vec3(0, 0, 3));
+	test.set_velocity(glm::vec3(-0.05, 0, 0));
+	
 	References::main_camera->move_to(glm::vec3(0,0,3));
 
 	IMGUI_CHECKVERSION();
@@ -66,7 +66,6 @@ int main()
 
 	UI temp;
 	//temp.demo = true;
-	//temp.objects = true;
 	temp.debug = true;
 
 	double last_frame = glfwGetTime();

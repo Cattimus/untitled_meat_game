@@ -1,6 +1,6 @@
 #pragma once
 
-#include "data/position.hpp"
+#include "data/movement.hpp"
 #include "data/mesh.hpp"
 #include "data/shader.hpp"
 #include "data/texture.hpp"
@@ -15,7 +15,7 @@ class Shader;
 class Texture;
 class Entity;
 
-class Entity : public Position
+class Entity : public Movement
 {
 private:
 	Mesh mesh;
@@ -35,6 +35,7 @@ public:
 	//render the current object
 	void render()
 	{
+		update_position();
 		shader->set_mat4f("model", get_model());
 		texture->use();
 		mesh.draw();
