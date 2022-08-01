@@ -22,10 +22,12 @@ private:
 	Shader* shader;
 	Texture* texture;
 	std::string name;
+	bool visible;
 
 public:
 	Entity(Shader* objShader, Texture* objTexture, std::string objName)
 	{
+		visible = true;
 		shader = objShader;
 		texture = objTexture;
 		name = objName;
@@ -36,9 +38,12 @@ public:
 	void render()
 	{
 		update_position();
-		shader->set_mat4f("model", get_model());
-		texture->use();
-		mesh.draw();
+		if(visible)
+		{
+			shader->set_mat4f("model", get_model());
+			texture->use();
+			mesh.draw();
+		}
 	}
 
 	Shader* get_shader()
@@ -69,5 +74,20 @@ public:
 	std::string get_name()
 	{
 		return name;
+	}
+
+	void set_visible(bool is_visible)
+	{
+		visible = is_visible;
+	}
+
+	bool get_visibility()
+	{
+		return visible;
+	}
+
+	bool* get_visible_ptr()
+	{
+		return &visible;
 	}
 };
